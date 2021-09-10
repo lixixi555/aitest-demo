@@ -2,7 +2,6 @@ package com.lucy.aitestdemo.common;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import sun.jvm.hotspot.oops.Instance;
 
 import java.io.Serializable;
 
@@ -32,6 +31,10 @@ public class ResultDto<T> implements Serializable {
         this.resultCode = 1;
     }
 
+    public void setAsFail() {
+        this.resultCode = 0;
+    }
+
     public String getMessage() {
         return message;
     }
@@ -50,6 +53,21 @@ public class ResultDto<T> implements Serializable {
     public static <T> ResultDto<T> success(String message, T data) {
         ResultDto<T> resultDto = new ResultDto<>();
         resultDto.setAsSuccess();
+        resultDto.setMessage(message);
+        resultDto.setData(data);
+        return resultDto;
+    }
+
+    public static ResultDto fail(String message) {
+        ResultDto resultDto = new ResultDto();
+        resultDto.setAsFail();
+        resultDto.setMessage(message);
+        return resultDto;
+    }
+
+    public static <T> ResultDto<T> fail(String message, T data) {
+        ResultDto<T> resultDto = new ResultDto<>();
+        resultDto.setAsFail();
         resultDto.setMessage(message);
         resultDto.setData(data);
         return resultDto;

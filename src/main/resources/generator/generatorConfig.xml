@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <properties resource="generator/config.properties"></properties>
+    <context id="Mysql" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+        <property name="beginningDelimiter" value=""/>
+        <property name="endingDelimiter" value=""/>
+
+        <plugin type="${mapper.plugin}">
+            <property name="mappers" value="${mapper.Mapper}"/>
+        </plugin>
+
+        <jdbcConnection driverClass="${jdbc.driverClass}"
+                        connectionURL="jdbc:mysql://106.55.244.12:3310/aitest?characterEncoding=utf8&amp;serverTimezone=Asia/Shanghai"
+                        userId="${jdbc.user}" password="${jdbc.password}"></jdbcConnection>
+
+        <javaModelGenerator targetPackage="${targetModelPackage}" targetProject="${targetJavaProject}">
+            <property name="rootClass" value="com.lucy.aitestdemo.entity.BaseEntityNew"/>
+        </javaModelGenerator>
+
+        <sqlMapGenerator targetPackage="${targetXMLPackage}"
+                         targetProject="${targetResourcesProject}"></sqlMapGenerator>
+
+        <javaClientGenerator type="XMLMAPPER" targetPackage="${targetMapperPackage}"
+                             targetProject="${targetJavaProject}"></javaClientGenerator>
+
+
+        <table schema="aitest" tableName="ai_test_user" domainObjectName="AiTestUser" enableCountByExample="1"
+               enableSelectByExample="false" enableUpdateByExample="false">
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"></generatedKey>
+
+        </table>
+    </context>
+</generatorConfiguration>

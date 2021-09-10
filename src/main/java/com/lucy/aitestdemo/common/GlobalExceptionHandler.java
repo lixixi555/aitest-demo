@@ -15,36 +15,36 @@ public class GlobalExceptionHandler {
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(ServiceException.class)
-    public String serviceExceptionHandler(ServiceException se) {
-        return "业务异常,系统繁忙，请稍后再试";
+    public ResultDto serviceExceptionHandler(ServiceException se) {
+        return ResultDto.fail("业务异常,系统繁忙，请稍后再试");
     }
 
     @ExceptionHandler(Exception.class)
-    public String exceptionHandler(Exception e) {
+    public ResultDto exceptionHandler(Exception e) {
 
-        return "非业务异常";
+        return ResultDto.fail("非业务异常");
     }
 
     @ExceptionHandler(Throwable.class)
-    public String throwableHandler(Throwable th) {
+    public ResultDto throwableHandler(Throwable th) {
 
         log.error(th.getMessage());
-        return "系统异常";
+        return ResultDto.fail("系统异常");
     }
 
-    public String resultFormat(Throwable th) {
+    public ResultDto resultFormat(Throwable th) {
 
         log.error(th.getMessage());
         String tips = "系统繁忙，请稍后重试";
         if (th instanceof ServiceException) {
-            return "业务异常" + tips;
+            return ResultDto.fail("业务异常" + tips);
         }
 
         if (th instanceof Exception) {
-            return "非业务异常" + tips;
+            return ResultDto.fail("非业务异常" + tips);
         }
 
-        return tips;
+        return ResultDto.fail(tips);
 
     }
 }
