@@ -48,13 +48,14 @@ public class HogwartsTestUserController {
     @ApiOperation("注册接口")
     //@RequestMapping(value = "login", method = RequestMethod.POST)
     @PostMapping("register")
-    public String register(@RequestBody AddAiTestUserDto addAiTestUserDto) {
+    public ResultDto<AiTestUser> register(@RequestBody AddAiTestUserDto addAiTestUserDto) {
 
         AiTestUser aiTestUser = new AiTestUser();
         BeanUtils.copyProperties(addAiTestUserDto, aiTestUser);
         aiTestUser.setDefaultJekinsId(addAiTestUserDto.getDefaultJekinsId2());
         System.out.println(JSONObject.toJSONString(aiTestUser));
-        return "成功";
+        hogwartsTestUserService.save(aiTestUser);
+        return ResultDto.success("成功", aiTestUser);
 
     }
 
